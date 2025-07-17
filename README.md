@@ -1,3 +1,180 @@
+## Healthcare No-Show Insights
+
+### Project Overview
+
+This project analyzes a real-world healthcare dataset of over 110,000 patient appointments from Brazil, sourced from Kaggle. The goal was to uncover patterns behind missed appointments (no-shows) 
+and generate actionable strategies to improve patient attendance.
+
+Key variables explored include:
+- Patient age and gender  
+- Chronic medical conditions  
+- Whether an SMS reminder was received  
+
+The analysis was conducted using Excel, Power Query, Power BI, and SQL for data transformation, visualization, and insight development.
+
+The findings are supported by external research showing the high cost of no-shows:
+No-shows cost the U.S. healthcare system approximately $150 billion annually, with millions in lost revenue for Australian hospitals.
+
+---
+
+## 1. Total Appointments Scheduled
+
+```sql
+SELECT COUNT(*) AS total_appointments
+FROM noshow_raw;
+
+SELECT
+  CASE
+    WHEN Age BETWEEN 0 AND 17 THEN 'Under 18'
+    WHEN Age BETWEEN 18 AND 40 THEN '18-40'
+    WHEN Age BETWEEN 41 AND 65 THEN '41-65'
+    ELSE '66+'
+  END AS Age_Band,
+  COUNT(*) AS total_appointments,
+  SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
+FROM noshow_raw
+GROUP BY Age_Band
+ORDER BY no_shows DESC;
+
+
+
+SELECT 'Hypertension' AS Condition, COUNT(*) AS count
+FROM noshow_raw WHERE Hipertension = 'TRUE'
+UNION ALL
+SELECT 'Diabetes', COUNT(*) FROM noshow_raw WHERE Diabetes = 'TRUE'
+UNION ALL
+SELECT 'Alcoholism', COUNT(*) FROM noshow_raw WHERE Alcoholism = 'TRUE'
+UNION ALL
+SELECT 'Handcap', COUNT(*) FROM noshow_raw WHERE Handcap = 'TRUE';
+
+SELECT SMS_received,
+       COUNT(*) AS total_appointments
+FROM noshow_raw
+GROUP BY SMS_received;
+
+SELECT SMS_received,
+       SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
+FROM noshow_raw
+GROUP BY SMS_received;
+
+SELECT Gender,
+       COUNT(*) AS total_appointments,
+       SUM(CASE WHEN Showed_up = 'TRUE' THEN 1 ELSE 0 END) AS showed_up
+FROM noshow_raw
+GROUP BY Gender;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Key Insights from the Dashboard
+
+| Insight | Summary |
+|--------|---------|
+| Ages 41–65 had the highest no-show volume | This middle-aged group accounted for the greatest number of missed appointments, making them a high-priority segment for intervention. |
+| Hypertension patients showed the most no-shows | Patients managing chronic illnesses like hypertension are at higher risk of missing appointments. |
+| Only about 40% of patients received an SMS reminder | SMS reminders were underused but had a clear positive effect. |
+| SMS reminders reduced no-shows by approximately 20% | Patients who received SMS reminders were significantly more likely to attend. |
+| Women were more likely to attend than men | Approximately 66% of attendees were female, suggesting potential for gender-specific outreach. |
+
+---
+
+### Recommendations
+
+- Expand SMS coverage to all patients, as reminders are linked to improved attendance.
+- Target patients aged 41–65 with additional or repeated reminders.
+- Implement receptionist follow-ups or calls for patients with chronic conditions, especially hypertension.
+- Explore gender-based engagement strategies to improve male attendance rates.
+
+---
+
+This project demonstrates how data-driven strategies can support healthcare providers in reducing no-shows, optimizing resources, and improving overall patient care.
+
+
+## Tools Used
+
+- **Excel**: Initial data cleaning and column derivation (e.g., labeling SMS status, creating age bands)
+- **Power Query**: Data reshaping from wide to long format for condition-level analysis
+- **SQL**: Calculated aggregated metrics, conditional counts, and implemented grouping logic
+- **Power BI**: Built interactive dashboards and developed insights based on the transformed dataset
+
+---
+
+## Dataset Source
+
+**Dataset**: Brazil No-Show Appointments  
+**Source**: [Kaggle – Joni Arroba](https://www.kaggle.com/datasets/joniarroba/noshowappointments)  
+**Size**: 110,000+ patient appointment records  
+**Usage**: For educational and non-commercial analysis purposes only
+
+---
+
+## Financial Impact of Missed Appointments
+
+- **United States**:  
+  - Estimated **$150 billion** in annual losses  
+  - Roughly **$200 per missed visit**
+
+- **Australia**:  
+  - **$500,000/year** in lost revenue at St Vincent’s Hospital  
+  - Up to **$3.8 million/month** in losses reported in QLD outpatient clinics
+
+**Sources**: NSW Government, The Guardian, TransLoc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Healthcare-No-Show-Project
 
 ###  Data Cleaning and Transformation (SQL + Power Query)
