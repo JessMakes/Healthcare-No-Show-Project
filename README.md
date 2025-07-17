@@ -19,11 +19,16 @@ No-shows cost the U.S. healthcare system approximately $150 billion annually, wi
 
 
 ```sql
-Total Appointments Scheduled
+####1.Total Appointments Scheduled
 SELECT COUNT(*) AS total_appointments
 FROM noshow_raw;
 
-No-Show by Age Band
+Answer:
+This returns the total number of appointment records in the dataset.
+110,527 appointments were scheduled in total.
+
+
+####2.No-Show by Age Band
 SELECT
   CASE
     WHEN Age BETWEEN 0 AND 17 THEN 'Under 18'
@@ -37,8 +42,11 @@ FROM noshow_raw
 GROUP BY Age_Band
 ORDER BY no_shows DESC;
 
+Answer:
+This returns the total number of appointment records in the dataset.
+110,527 appointments were scheduled in total.
 
-Attendance by Chronic Condition
+####3.Attendance by Chronic Condition
 SELECT 'Hypertension' AS Condition, COUNT(*) AS count
 FROM noshow_raw WHERE Hipertension = 'TRUE'
 UNION ALL
@@ -48,18 +56,32 @@ SELECT 'Alcoholism', COUNT(*) FROM noshow_raw WHERE Alcoholism = 'TRUE'
 UNION ALL
 SELECT 'Handcap', COUNT(*) FROM noshow_raw WHERE Handcap = 'TRUE';
 
-Total Appointments by SMS Status
+Answer:
+This query combines results from different chronic condition flags.
+
+ Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
+
+
+
+####4.Total Appointments by SMS Status
 SELECT SMS_received,
        COUNT(*) AS total_appointments
 FROM noshow_raw
 GROUP BY SMS_received;
 
-No-Show Count by SMS Status
+
+####5.No-Show Count by SMS Status
 SELECT SMS_received,
        SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
 FROM noshow_raw
 GROUP BY SMS_received;
 
+Answer:
+This compares no-shows between patients who did and didn’t receive SMS.
+Patients who received SMS reminders had significantly fewer no-shows, with an estimated 20% improvement in attendance.
+
+
+####6.Do attendance patterns differ between genders?
 Showed Up Status by Gender
 SELECT Gender,
        COUNT(*) AS total_appointments,
@@ -67,6 +89,9 @@ SELECT Gender,
 FROM noshow_raw
 GROUP BY Gender;
 
+Answer:
+This breaks down attendance behavior by gender.
+Women attended appointments more consistently than men, representing roughly 66% of total
 
 ### Key Insights from the Dashboard
 
