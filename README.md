@@ -38,7 +38,7 @@ The following transformations were implemented using **SQLite** to create the cl
 
 ####  Power Query Cleaning (Power BI)
 
-In a separate transformation exercise, I used  **Excel** and **Power Query** were used to reshape the data for condition-level analysis and visualization.
+In a separate transformation exercise, I used  **Excel** and **Power Query** to reshape the data for condition-level analysis and visualization in Power BI.
 
 | Task                      | Tool Used   | Columns Affected                    | Description                                                                 |
 |---------------------------|-------------|-------------------------------------|-----------------------------------------------------------------------------|
