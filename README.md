@@ -18,7 +18,6 @@ No-shows cost the U.S. healthcare system approximately $150 billion annually, wi
 ---
 
 
-
 ```sql
 Total Appointments Scheduled
 SELECT COUNT(*) AS total_appointments
@@ -67,50 +66,6 @@ SELECT Gender,
        SUM(CASE WHEN Showed_up = 'TRUE' THEN 1 ELSE 0 END) AS showed_up
 FROM noshow_raw
 GROUP BY Gender;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ### Key Insights from the Dashboard
