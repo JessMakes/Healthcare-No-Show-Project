@@ -58,7 +58,7 @@ SELECT 'Handcap', COUNT(*) FROM noshow_raw WHERE Handcap = 'TRUE';
 
 Answer:
 This query combines results from different chronic condition flags.
- Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
+Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
 
 
 4.Total Appointments by SMS Status
