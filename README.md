@@ -1,25 +1,52 @@
 # Healthcare-No-Show-Project
 
+###  Data Cleaning and Transformation (SQL + Power Query)
 
-# 📊 Healthcare No-Show Analysis – SQL Cleaning Script
+The no-show patient dataset was cleaned and transformed using **SQL**, **Excel**, and **Power Query**. These tools were applied on separate occasions to demonstrate flexibility 
+in using both code-first and visual transformation methods.
 
-This project focuses on preparing and transforming raw patient appointment data for effective analysis. The dataset contains patient demographics, appointment dates, and whether the patient showed up. Cleaning was done using **SQL**, and the result is a new table: `noshow_cleaned`.
+---
+
+####  SQL-Based Cleaning
+
+The following transformations were implemented using **SQLite** to create the cleaned table: `noshow_cleaned`.
+
+| Task                   | Columns Affected                        | Description                                                                  |
+|------------------------|-----------------------------------------|------------------------------------------------------------------------------|
+| Format Dates           | ScheduledDay, AppointmentDay            | Converted to `YYYY-MM-DD` using `strftime()`                                |
+| Create Age Groups      | Age → Age_Band                          | Grouped into: `0–18`, `19–30`, `31–45`, `46–60`, `61+`                       |
+| Convert Booleans       | Scholarship, Hypertension, etc.         | Converted `TRUE` → `"Yes"`, `FALSE` → `"No"`                                 |
+| Relabel SMS Received   | SMS_received → SMS_Status               | `"TRUE"` → `"Got SMS"`, `"FALSE"` → `"No SMS"`                              |
+| Relabel Showed_Up      | No-show → Show_Status                   | `"No"` → `"Showed Up"`, `"Yes"` → `"No-Show"`                               |
+| Add Wait Time          | ScheduledDay, AppointmentDay → Wait_Days| Calculated wait time using `julianday()` difference                         |
 
 ---
 
-##  Cleaning Objectives Using SQL
+####  Power Query Cleaning (Power BI)
 
-| Step | Description |
-|------|-------------|
-|  Rename Columns | Standardized column names for clarity |
-|  Format Dates | Converted date columns to `YYYY-MM-DD` using `strftime()` |
-|  Age Banding | Created age groups: `0–18`, `19–30`, `31–45`, `46–60`, `61+` |
-|  Boolean Conversion | Changed `TRUE`/`FALSE` into human-readable `Yes`/`No` |
-|  SMS Status | Renamed and recoded `SMS_received` to `Got SMS` / `No SMS` |
-|  Show Status | Inverted `No-show` to a clearer `Showed Up` / `No-Show` label |
-| ⏱ Wait Time | Added `Wait_Days` column by subtracting `ScheduledDay` from `AppointmentDay` |
+In a separate transformation exercise, **Excel** and **Power Query** were used to reshape the data for condition-level analysis and visualization.
+
+| Task                      | Tool Used   | Columns Affected                    | Description                                                                 |
+|---------------------------|-------------|-------------------------------------|-----------------------------------------------------------------------------|
+| Label SMS Status          | Excel       | SMS_received → SMS_Status           | Converted binary: TRUE → `"Got SMS"`, FALSE → `"No SMS"`                   |
+| Simplify No-show Logic    | Excel       | No-show → Showed_Up                 | `"No"` → `"Showed Up"`, `"Yes"` → `"No-Show"`                              |
+| Create Age Groups         | Excel       | Age → Age Band                      | Banded into: `0–18`, `19–30`, `31–45`, `46–60`, `61+`                       |
+| Unpivot Conditions        | Power Query | Diabetes, Hypertension, Alcoholism  | Unpivoted into a single `Condition` column                                 |
+| Add Presence Indicator    | Power Query | Condition → Present                 | Boolean column to indicate presence of condition                           |
+| Filter Relevant Records   | Power Query | Present                             | Filtered for `Present = TRUE` only                                         |
+| Relabel Attendance Status | Power Query | Showed_Up                           | Converted TRUE → `"Showed Up"`, FALSE → `"No-Show"`                        |
 
 ---
+
+###  Why This Matters
+
+Using **SQL** enabled backend data preparation with precision and performance — ideal for scalable analysis and BI reporting. Meanwhile,
+
+**Power Query** and **Excel** allowed for rapid reshaping and intuitive, no-code data exploration.
+
+---
+
+
 
 ## 🧠 SQL Script Used
 
