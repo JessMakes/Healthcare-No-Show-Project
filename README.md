@@ -62,26 +62,28 @@ SELECT COUNT(*) AS total_appointments
 FROM noshow_cleaned;
 
 This returns the total number of appointment records in the dataset.
-110,527 appointments were scheduled in total.
+106,987 appointments were scheduled in total.
 
 
 2.No-Show by Age Band
 SELECT
   CASE
-    WHEN Age BETWEEN 0 AND 18 THEN 'Under 18'
-    WHEN Age BETWEEN 19 AND 30 THEN '19-30'
-    WHEN AGE BETWEEN 31 AND 45 THEN''31-45
-    WHEN Age BETWEEN 46 AND 60 THEN '46-60'
+    WHEN Age BETWEEN 0 AND 18 THEN '0–18'
+    WHEN Age BETWEEN 19 AND 30 THEN '19–30'
+    WHEN Age BETWEEN 31 AND 45 THEN '31–45'
+    WHEN Age BETWEEN 46 AND 60 THEN '46–60'
     ELSE '61+'
   END AS Age_Band,
   COUNT(*) AS total_appointments,
-  SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
+  SUM(CASE WHEN Show_Status = 'No-Show' THEN 1 ELSE 0 END) AS no_shows
 FROM noshow_cleaned
 GROUP BY Age_Band
 ORDER BY no_shows DESC;
 
-This returns the total number of appointment records in the dataset.
-110,527 appointments were scheduled in total.
+<img width="393" height="220" alt="image" src="https://github.com/user-attachments/assets/20bc481d-1c71-4f16-b36a-da2a699722a6" />
+
+
+
 
 3.Attendance by Chronic Condition
 SELECT 'Hypertension' AS Condition, COUNT(*) AS count
