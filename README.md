@@ -92,17 +92,7 @@ parental or guardian-related factors, such as:
 
 **Implication:** Healthcare providers may consider targeted SMS reminders for pediatric appointments or follow-up calls to guardians.
 
-
-3.Attendance by Chronic Condition
-This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap)
-using separate `SELECT` statements combined with `UNION ALL`.
-
-
-Purpose of Using `UNION ALL`:
-The dataset stores each chronic condition as a separate column. To count how many patients have each condition, we must query each column independently. 
-Rather than running four separate queries, I used `UNION ALL` to stack the result vertically to get the final result.
-
-
+3. Attendance by Chronic Condition
 
 SELECT 'Hypertension' AS Condition, COUNT(*) AS count
 FROM noshow_cleaned WHERE Hypertension = 'Yes'
@@ -123,6 +113,9 @@ SELECT 'Handicap', COUNT(*)
 FROM noshow_cleaned WHERE Handicap = 'Yes';
 
 Finding:
+Purpose of UNION ALL:
+This merges multiple column-specific counts into one table since each chronic condition is stored in its own column.
+
 Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
 | Hypertension patients showed the most no-shows | Patients managing chronic illnesses like hypertension are at higher risk of missing appointments. |
 
@@ -161,28 +154,24 @@ Finding:
 Women attended appointments more consistently than men, representing roughly 66% of total appointments.
 
 
-Key Insights:
+| Insight                                        | Summary                                                 |
+| ---------------------------------------------- | ------------------------------------------------------- |
+| Only 32% of patients received SMS reminders    | Indicates missed opportunity for improving attendance   |
+| SMS reminders reduced no-shows by \~20%        | Clear effectiveness of reminders                        |
+| Female patients showed higher attendance rates | Suggests gender-specific outreach may improve results   |
+| Children (0–18) missed most appointments       | Pediatric care requires proactive scheduling strategies |
 
-| Insight | Summary |
-|--------|---------|
-
-
-| Only about 40% of patients received an SMS reminder | SMS reminders were underused but had a clear positive effect. |
-| SMS reminders reduced no-shows by approximately 20% | Patients who received SMS reminders were significantly more likely to attend. |
-| Women were more likely to attend than men | Approximately 66% of attendees were female, suggesting potential for gender-specific outreach. |
 
 ---
 
 Recommendations
 
 - Expand SMS coverage to all patients, as reminders are linked to improved attendance.
+- Consider guardian-focused reminders for pediatric appointments.
 - Implement receptionist follow-ups or calls for patients with chronic conditions, especially hypertension.
 - Explore gender-based engagement strategies to improve male attendance rates.
 
 ---
-
-This project demonstrates how data-driven strategies can support healthcare providers in reducing no-shows, optimizing resources, and improving overall patient care.
-
 
 Tools Used
 
