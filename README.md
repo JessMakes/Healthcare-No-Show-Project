@@ -59,7 +59,7 @@ I further explored the dataset using the SQL.
 ```sql
 1.Total Appointments Scheduled
 SELECT COUNT(*) AS total_appointments
-FROM noshow_raw;
+FROM noshow_cleaned;
 
 This returns the total number of appointment records in the dataset.
 110,527 appointments were scheduled in total.
@@ -68,14 +68,15 @@ This returns the total number of appointment records in the dataset.
 2.No-Show by Age Band
 SELECT
   CASE
-    WHEN Age BETWEEN 0 AND 17 THEN 'Under 18'
-    WHEN Age BETWEEN 18 AND 40 THEN '18-40'
-    WHEN Age BETWEEN 41 AND 65 THEN '41-65'
-    ELSE '66+'
+    WHEN Age BETWEEN 0 AND 18 THEN 'Under 18'
+    WHEN Age BETWEEN 19 AND 30 THEN '19-30'
+    WHEN AGE BETWEEN 31 AND 45 THEN''31-45
+    WHEN Age BETWEEN 46 AND 60 THEN '46-60'
+    ELSE '61+'
   END AS Age_Band,
   COUNT(*) AS total_appointments,
   SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
-FROM noshow_raw
+FROM noshow_cleaned
 GROUP BY Age_Band
 ORDER BY no_shows DESC;
 
@@ -86,11 +87,11 @@ This returns the total number of appointment records in the dataset.
 SELECT 'Hypertension' AS Condition, COUNT(*) AS count
 FROM noshow_raw WHERE Hipertension = 'TRUE'
 UNION ALL
-SELECT 'Diabetes', COUNT(*) FROM noshow_raw WHERE Diabetes = 'TRUE'
+SELECT 'Diabetes', COUNT(*) FROM noshow_cleaned WHERE Diabetes = 'TRUE'
 UNION ALL
-SELECT 'Alcoholism', COUNT(*) FROM noshow_raw WHERE Alcoholism = 'TRUE'
+SELECT 'Alcoholism', COUNT(*) FROM noshow_cleaned WHERE Alcoholism = 'TRUE'
 UNION ALL
-SELECT 'Handcap', COUNT(*) FROM noshow_raw WHERE Handcap = 'TRUE';
+SELECT 'Handicap', COUNT(*) FROM noshow_cleaned WHERE Handicap = 'TRUE';
 
 This query combines results from different chronic condition flags.
 Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
@@ -99,17 +100,17 @@ Hypertension had the highest appointment count among chronic conditions, followe
 4.Total Appointments by SMS Status
 SELECT SMS_received,
        COUNT(*) AS total_appointments
-FROM noshow_raw
+FROM noshow_cleaned
 GROUP BY SMS_received;
 
 
 5.No-Show Count by SMS Status
 SELECT SMS_received,
        SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
-FROM noshow_raw
+FROM noshow_cleaned
 GROUP BY SMS_received;
 
-Answer:
+
 This compares no-shows between patients who did and didn’t receive SMS.
 Patients who received SMS reminders had significantly fewer no-shows, with an estimated 20% improvement in attendance.
 
@@ -118,10 +119,9 @@ Showed Up Status by Gender
 SELECT Gender,
        COUNT(*) AS total_appointments,
        SUM(CASE WHEN Showed_up = 'TRUE' THEN 1 ELSE 0 END) AS showed_up
-FROM noshow_raw
+FROM noshow_cleaned
 GROUP BY Gender;
 
-Answer:
 This breaks down attendance behavior by gender.
 Women attended appointments more consistently than men, representing roughly 66% of total
 
