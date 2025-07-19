@@ -82,7 +82,8 @@ ORDER BY no_shows DESC;
 
 ### Insight: Highest No-Shows in the 0–18 Age Band
 
-The 0–18 age group recorded the highest number of no-shows (5,708 out of 25,327 appointments). This is likely due to parental or guardian-related factors, such as:
+The 0–18 age group recorded the highest number of no-shows (5,708 out of 25,327 appointments). This is likely due to
+parental or guardian-related factors, such as:
 
 - Forgetfulness or scheduling conflicts
 - Lower perceived urgency if the child shows no severe symptoms
@@ -93,7 +94,8 @@ The 0–18 age group recorded the highest number of no-shows (5,708 out of 25,32
 
 
 3.Attendance by Chronic Condition
-This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap) using separate `SELECT` statements combined with `UNION ALL`.
+This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap) using
+separate `SELECT` statements combined with `UNION ALL`.
 
 Purpose of Using `UNION ALL`:
 The dataset stores each chronic condition as a separate column. To count how many patients have each condition, we must query each column independently. 
@@ -158,7 +160,7 @@ Finding:
 Women attended appointments more consistently than men, representing roughly 66% of total appointments.
 
 
-### Key Insights:
+Key Insights:
 
 | Insight | Summary |
 |--------|---------|
@@ -170,7 +172,7 @@ Women attended appointments more consistently than men, representing roughly 66%
 
 ---
 
-### Recommendations
+Recommendations
 
 - Expand SMS coverage to all patients, as reminders are linked to improved attendance.
 - Implement receptionist follow-ups or calls for patients with chronic conditions, especially hypertension.
@@ -181,7 +183,7 @@ Women attended appointments more consistently than men, representing roughly 66%
 This project demonstrates how data-driven strategies can support healthcare providers in reducing no-shows, optimizing resources, and improving overall patient care.
 
 
-## Tools Used
+Tools Used
 
 - **Excel**: Initial data cleaning and column derivation (e.g., labeling SMS status, creating age bands)
 - **Power Query**: Data reshaping from wide to long format for condition-level analysis
@@ -190,7 +192,7 @@ This project demonstrates how data-driven strategies can support healthcare prov
 
 ---
 
-## Dataset Source
+Dataset Source
 
 **Dataset**: Brazil No-Show Appointments  
 **Source**: [Kaggle – Joni Arroba](https://www.kaggle.com/datasets/joniarroba/noshowappointments)  
@@ -199,7 +201,7 @@ This project demonstrates how data-driven strategies can support healthcare prov
 
 ---
 
-## Financial Impact of Missed Appointments
+Financial Impact of Missed Appointments
 
 - **United States**:  
   - Estimated **$150 billion** in annual losses  
