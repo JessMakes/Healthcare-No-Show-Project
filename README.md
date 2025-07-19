@@ -61,7 +61,6 @@ I further explored the dataset using the SQL.
 SELECT COUNT(*) AS total_appointments
 FROM noshow_raw;
 
-Answer:
 This returns the total number of appointment records in the dataset.
 110,527 appointments were scheduled in total.
 
@@ -80,7 +79,6 @@ FROM noshow_raw
 GROUP BY Age_Band
 ORDER BY no_shows DESC;
 
-Answer:
 This returns the total number of appointment records in the dataset.
 110,527 appointments were scheduled in total.
 
@@ -94,7 +92,6 @@ SELECT 'Alcoholism', COUNT(*) FROM noshow_raw WHERE Alcoholism = 'TRUE'
 UNION ALL
 SELECT 'Handcap', COUNT(*) FROM noshow_raw WHERE Handcap = 'TRUE';
 
-Answer:
 This query combines results from different chronic condition flags.
 Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
 
