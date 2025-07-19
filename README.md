@@ -94,8 +94,9 @@ parental or guardian-related factors, such as:
 
 
 3.Attendance by Chronic Condition
-This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap) using
-separate `SELECT` statements combined with `UNION ALL`.
+This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap)
+using separate `SELECT` statements combined with `UNION ALL`.
+
 
 Purpose of Using `UNION ALL`:
 The dataset stores each chronic condition as a separate column. To count how many patients have each condition, we must query each column independently. 
