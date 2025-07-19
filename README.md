@@ -117,7 +117,8 @@ Purpose of UNION ALL:
 This merges multiple column-specific counts into one table since each chronic condition is stored in its own column.
 
 Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
-Hypertension patients showed the most no-shows.Patients managing chronic illnesses like hypertension are at higher risk of missing appointments. 
+Hypertension patients showed the most no-shows.Patients managing chronic illnesses like hypertension are at higher risk
+of missing appointments. 
 
 
 4.Total Appointments by SMS Status
