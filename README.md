@@ -80,59 +80,90 @@ FROM noshow_cleaned
 GROUP BY Age_Band
 ORDER BY no_shows DESC;
 
-<img width="393" height="220" alt="image" src="https://github.com/user-attachments/assets/20bc481d-1c71-4f16-b36a-da2a699722a6" />
+### Insight: Highest No-Shows in the 0–18 Age Band
 
+The 0–18 age group recorded the highest number of no-shows (5,708 out of 25,327 appointments). This is likely due to parental or guardian-related factors, such as:
 
+- Forgetfulness or scheduling conflicts
+- Lower perceived urgency if the child shows no severe symptoms
+- School timing clashes
+- Transportation or financial challenges
+
+**Implication:** Healthcare providers may consider targeted SMS reminders for pediatric appointments or follow-up calls to guardians.
 
 
 3.Attendance by Chronic Condition
-SELECT 'Hypertension' AS Condition, COUNT(*) AS count
-FROM noshow_raw WHERE Hipertension = 'TRUE'
-UNION ALL
-SELECT 'Diabetes', COUNT(*) FROM noshow_cleaned WHERE Diabetes = 'TRUE'
-UNION ALL
-SELECT 'Alcoholism', COUNT(*) FROM noshow_cleaned WHERE Alcoholism = 'TRUE'
-UNION ALL
-SELECT 'Handicap', COUNT(*) FROM noshow_cleaned WHERE Handicap = 'TRUE';
+This query calculates the total number of patients with each chronic condition (Hypertension, Diabetes, Alcoholism, Handicap) using separate `SELECT` statements combined with `UNION ALL`.
 
-This query combines results from different chronic condition flags.
+Purpose of Using `UNION ALL`:
+The dataset stores each chronic condition as a separate column. To count how many patients have each condition, we must query each column independently. 
+Rather than running four separate queries, I used `UNION ALL` to stack the result vertically to get the final result.
+
+
+
+SELECT 'Hypertension' AS Condition, COUNT(*) AS count
+FROM noshow_cleaned WHERE Hypertension = 'Yes'
+
+UNION ALL
+
+SELECT 'Diabetes', COUNT(*) 
+FROM noshow_cleaned WHERE Diabetes = 'Yes'
+
+UNION ALL
+
+SELECT 'Alcoholism', COUNT(*) 
+FROM noshow_cleaned WHERE Alcoholism = 'Yes'
+
+UNION ALL
+
+SELECT 'Handicap', COUNT(*) 
+FROM noshow_cleaned WHERE Handicap = 'Yes';
+
+Finding:
 Hypertension had the highest appointment count among chronic conditions, followed by diabetes.
+| Hypertension patients showed the most no-shows | Patients managing chronic illnesses like hypertension are at higher risk of missing appointments. |
 
 
 4.Total Appointments by SMS Status
-SELECT SMS_received,
+"How many patients actually received a reminder versus those who didn’t?"
+
+SELECT SMS_STATUS,
        COUNT(*) AS total_appointments
 FROM noshow_cleaned
-GROUP BY SMS_received;
+GROUP BY SMS_Status;
 
+Finding:
+Only 32% of the 106,987 scheduled appointments received an SMS reminder, totaling 34,585 patients.
 
 5.No-Show Count by SMS Status
-SELECT SMS_received,
-       SUM(CASE WHEN Showed_up = 'FALSE' THEN 1 ELSE 0 END) AS no_shows
+
+SELECT SMS_Status,
+       SUM(CASE WHEN Show_Status = 'No-Show' THEN 1 ELSE 0 END) AS no_shows
 FROM noshow_cleaned
-GROUP BY SMS_received;
+GROUP BY SMS_Status;
 
-
+Finding:
 This compares no-shows between patients who did and didn’t receive SMS.
 Patients who received SMS reminders had significantly fewer no-shows, with an estimated 20% improvement in attendance.
 
 6.Do attendance patterns differ between genders?
-Showed Up Status by Gender
+
 SELECT Gender,
        COUNT(*) AS total_appointments,
-       SUM(CASE WHEN Showed_up = 'TRUE' THEN 1 ELSE 0 END) AS showed_up
+       SUM(CASE WHEN Show_Status = 'Showed Up' THEN 1 ELSE 0 END) AS showed_up
 FROM noshow_cleaned
 GROUP BY Gender;
 
-This breaks down attendance behavior by gender.
-Women attended appointments more consistently than men, representing roughly 66% of total
+Finding:
+Women attended appointments more consistently than men, representing roughly 66% of total appointments.
 
-### Key Insights from the Dashboard
+
+### Key Insights:
 
 | Insight | Summary |
 |--------|---------|
-| Ages 41–65 had the highest no-show volume | This middle-aged group accounted for the greatest number of missed appointments, making them a high-priority segment for intervention. |
-| Hypertension patients showed the most no-shows | Patients managing chronic illnesses like hypertension are at higher risk of missing appointments. |
+
+
 | Only about 40% of patients received an SMS reminder | SMS reminders were underused but had a clear positive effect. |
 | SMS reminders reduced no-shows by approximately 20% | Patients who received SMS reminders were significantly more likely to attend. |
 | Women were more likely to attend than men | Approximately 66% of attendees were female, suggesting potential for gender-specific outreach. |
@@ -142,7 +173,6 @@ Women attended appointments more consistently than men, representing roughly 66%
 ### Recommendations
 
 - Expand SMS coverage to all patients, as reminders are linked to improved attendance.
-- Target patients aged 41–65 with additional or repeated reminders.
 - Implement receptionist follow-ups or calls for patients with chronic conditions, especially hypertension.
 - Explore gender-based engagement strategies to improve male attendance rates.
 
